@@ -14,7 +14,7 @@ public class SetTimer extends AppCompatActivity {
         Log.i("Tag", "SetTimer called");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_set_timer);
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
