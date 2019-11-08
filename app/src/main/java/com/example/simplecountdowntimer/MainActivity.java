@@ -12,14 +12,16 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE = "com.example.simplecountdowntimer.MESSAGE";
+    public static final String EXTRA_TIME = "com.example.simplecountdowntimer.TIME";
+
     private TextView countDownText;
     private Button countDownButton;
     private CountDownTimer countDownTimer;
-    private long timeLeftInMilliseconds = 600000; //600,000 = 10 minutes
+    private long timeLeftInMilliseconds = 0; //600,000 = 10 minutes
     private boolean timerRunning;
 
 
@@ -28,16 +30,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        countDownText = findViewById(R.id.countdown_text);
+        countDownText = findViewById(R.id.countDownText);
         countDownButton = findViewById(R.id.countdown_button);
-
         countDownButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startStop();
             }
         });
-
+        Intent intent =getIntent();
+        timeLeftInMilliseconds = getIntent().getLongExtra(EXTRA_TIME, 0);
         updateTimer();
     }
 
@@ -85,14 +87,16 @@ public class MainActivity extends AppCompatActivity {
         int seconds = (int) (timeLeftInMilliseconds / 1000) % 60;
         String timeLeftText;
 
-
-        timeLeftText = "" + minutes;
-        if(minutes < 10) timeLeftText = "0" + minutes;
+        timeLeftText = "" + hours;
+        if(hours < 10) timeLeftText = "0" + hours;
         timeLeftText += ":";
+
+        if(minutes < 10) timeLeftText += "0" + minutes;
+        if(minutes >= 10) timeLeftText += minutes;
+        timeLeftText += ":";
+
         if(seconds < 10) timeLeftText += "0";
         timeLeftText += seconds;
-
-
 
         countDownText.setText((timeLeftText));
     }
