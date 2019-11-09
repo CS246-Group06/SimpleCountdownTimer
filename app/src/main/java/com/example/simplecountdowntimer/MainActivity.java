@@ -44,8 +44,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setTimer (View view) {
-        Intent intent = new Intent(this, SetTimer.class);
-        startActivity(intent);
+        if(timeLeftInMilliseconds > 0) {
+            timeLeftInMilliseconds = 0;
+            updateTimer();
+        }
+        else {
+            Intent intent = new Intent(this, SetTimer.class);
+            startActivity(intent);
+        }
     }
 
 
