@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_NAME = "com.example.simplecountdowntimer.NAME";
 
     private TextView countDownText;
-    private TextView labelName;
     private TextView setRest;
+    private TextView editlabel;
     private Button countDownButton;
     private Button setReset;
     //private String timerLabel = "Timer 1";
@@ -29,21 +29,16 @@ public class MainActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private long timeLeftInMilliseconds = 0; //600,000 = 10 minutes
     private long resetTime;
-    private boolean timerRunning;
+    private boolean timerRunning = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        labelName = findViewById(R.id.labelName);
+        Log.i("Tag", "onCreate");
+        editlabel = findViewById(R.id.labelName);
         setReset = findViewById(R.id.setReset);
-        setReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setTimer();
-            }
-        });
         countDownText = findViewById(R.id.countDownText);
         countDownButton = findViewById(R.id.countdown_button);
         countDownButton.setOnClickListener(new View.OnClickListener() {
@@ -53,29 +48,45 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Sets the default name of the timer
-        labelName.setText(("Timer 1"));
-
         // Updates variables with time and label set by user
         Intent intent =getIntent();
         timeLeftInMilliseconds = getIntent().getLongExtra(EXTRA_TIME, 0);
         resetTime = timeLeftInMilliseconds;
-        labelName.setText(intent.getStringExtra(EXTRA_NAME));
+        editlabel.setText(intent.getStringExtra(EXTRA_NAME));
 
         // Updates the Text box displaying time set by user
         updateTimer();
+        Log.i("Tag", "initial timer update done");
     }
 
 
-    public void setTimer () {
+    public void setTimer(View view) {
+        Log.i("Tag", "setTimer called");
         // If there is time left on the timer, RESET it
-        if(timeLeftInMilliseconds > 0) {
-            timeLeftInMilliseconds = resetTime;
+        // and continue to run.
+        if(timerRunning) {
+            Log.i("Tag", "IF ran");
             startStop();
+            timeLeftInMilliseconds = resetTime;
             updateTimer();
+            setReset.setText("SET");
+        }
+        // If there is time left on the timer, but timer has been
+        // paused, .
+        else if(!timerRunning && (timeLeftInMilliseconds != resetTime)) {
+            Log.i("Tag", "first ELSE IF ran");
+            timeLeftInMilliseconds = resetTime;
+            updateTimer();
+            setReset.setText("SET");
         }
         // If no time left on the timer, go to SetTimer activity
+        else if(!timerRunning && timeLeftInMilliseconds == resetTime){
+            Log.i("Tag", "second ELSE IF ran");
+            Intent intent = new Intent(this, SetTimer.class);
+            startActivity(intent);
+        }
         else {
+            Log.i("Tag", "ELSE ran");
             Intent intent = new Intent(this, SetTimer.class);
             startActivity(intent);
         }
