@@ -24,10 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView editlabel;
     private Button countDownButton;
     private Button setReset;
-    //private String timerLabel = "Timer 1";
-   // private TextView timerLabel2;
     private CountDownTimer countDownTimer;
-    private long timeLeftInMilliseconds = 0; //600,000 = 10 minutes
+    private long timeLeftInMilliseconds = 0;
     private long resetTime;
     private boolean timerRunning = false;
 
@@ -39,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Tag", "onCreate");
         editlabel = findViewById(R.id.labelName);
         setReset = findViewById(R.id.setReset);
-        countDownText = findViewById(R.id.countDownText);
+        countDownText = findViewById(R.id.countDownText2);
         countDownButton = findViewById(R.id.countdown_button);
         countDownButton.setOnClickListener(new View.OnClickListener() {
             @Override

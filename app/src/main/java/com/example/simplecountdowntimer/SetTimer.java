@@ -53,9 +53,10 @@ public class SetTimer extends AppCompatActivity {
 
         long minutesInMilliseconds = 60000 * Integer.parseInt(minutes2);
         long secondsInMilliseconds = 1000 * Integer.parseInt(seconds2);
-        long hoursInMilliseconds = 3600000 + Integer.parseInt(hours2);
+        long hoursInMilliseconds = 3600000 * Integer.parseInt(hours2);
         long totalTimeInMilliseconds = minutesInMilliseconds + secondsInMilliseconds + hoursInMilliseconds;
-        Log.i("Tag", (totalTimeInMilliseconds / (1000 * 60 * 60)) % 24 + " hours");
+
+        Log.i("Tag", (totalTimeInMilliseconds / (3600000)) % 24 + " hours");
         Log.i("Tag", (totalTimeInMilliseconds / 60000) % 60 + " minutes");
         Log.i("Tag", ((totalTimeInMilliseconds / 1000) % 60) + " seconds");
         Log.i("Tag", totalTimeInMilliseconds + " milliseconds");
